@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/img/(.*)",
+      "destination": "https://<YOUR-BLOB-BUCKET>.public.blob.vercel-storage.com/img/$1"
+    }
+  ]
+}
