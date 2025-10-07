@@ -16,22 +16,19 @@ export async function POST(request: Request): Promise<NextResponse> {
       body,
       request,
       onBeforeGenerateToken: async (pathname) => {
-          const session = await auth();
-          if (!session?.user) {
-            throw new Error('Unauthorized');
+        const session = await auth();
+        if (session?.user) {
+          if (isUploadPathnameValid(pathname)) {
+            return {
+              maximumSizeInBytes: MAX_PHOTO_UPLOAD_SIZE_IN_BYTES,
+              allowedContentTypes: ACCEPTED_PHOTO_FILE_TYPES,
+              addRandomSuffix: true,
+            };
+          } else {
+            throw new Error('Invalid upload');
           }
-        
-          // 确保文件名带扩展名
-          if (!/\.(png|jpe?g|gif|webp|svg)$/i.test(pathname)) {
-            throw new Error('File must be an image with extension');
-          }
-        
-          return {
-            maximumSizeInBytes: MAX_PHOTO_UPLOAD_SIZE_IN_BYTES,
-            allowedContentTypes: ACCEPTED_PHOTO_FILE_TYPES,
-            addRandomSuffix: false,  // 关掉随机后缀
-            pathname: `img/${pathname}`,  // 强制保存到 img/ 下
-          };
+        } else {
+          throw new Error('Unauthenticated upload');
         }
       },
       // This argument is required, but doesn't seem to fire
