@@ -161,3 +161,11 @@ export const getPhotoFileExtension = (photo: Photo): string => {
   const { fileExtension } = getFileNamePartsFromStorageUrl(photo.url);
   return fileExtension || 'jpg';
 };
+
+// Generate email-friendly URL with proper extension and MIME type
+export const getPhotoEmailUrl = (photo: Photo, baseUrl?: string): string => {
+  const extension = getPhotoFileExtension(photo);
+  const photoId = photo.id;
+  const url = baseUrl || '';
+  return `${url}/p/${photoId}.${extension}`;
+};

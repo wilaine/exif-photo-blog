@@ -288,6 +288,16 @@ export const absolutePathForPhotoWithExtension = (
   return params.extension ? `${basePath}.${params.extension}` : basePath;
 };
 
+// Generate raw image URL with extension for email compatibility 
+export const absolutePathForPhotoRaw = (
+  params: PhotoPathParams & { extension?: string },
+  share?: boolean,
+) => {
+  const photoId = typeof params.photo === 'string' ? params.photo : params.photo.id;
+  const basePath = `${getBaseUrl(share)}/p/${photoId}`;
+  return params.extension ? `${basePath}.${params.extension}` : basePath;
+};
+
 export const absolutePathForCamera= (camera: Camera, share?: boolean) =>
   `${getBaseUrl(share)}${pathForCamera(camera)}`;
 

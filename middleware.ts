@@ -32,10 +32,10 @@ export default function middleware(req: NextRequest, res:NextResponse) {
       req.url,
     ));
   } else if (/^\/p\/([^/]+)\.(jpg|jpeg|png|gif|webp)$/i.test(pathname)) {
-    // Accept /p/photoId.ext paths, but serve /p/photoId (strip extension)
+    // Accept /p/photoId.ext paths, but serve raw image from /p/photoId/raw
     const matches = pathname.match(/^\/p\/([^/]+)\.(jpg|jpeg|png|gif|webp)$/i);
     return NextResponse.rewrite(new URL(
-      `${PREFIX_PHOTO}/${matches?.[1]}`,
+      `${PREFIX_PHOTO}/${matches?.[1]}/raw`,
       req.url,
     ));
   }
