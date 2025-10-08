@@ -279,6 +279,15 @@ export const absolutePathForPhoto = (
 ) =>
   `${getBaseUrl(share)}${pathForPhoto(params)}`;
 
+// Generate photo URL with file extension
+export const absolutePathForPhotoWithExtension = (
+  params: PhotoPathParams & { extension?: string },
+  share?: boolean,
+) => {
+  const basePath = absolutePathForPhoto(params, share);
+  return params.extension ? `${basePath}.${params.extension}` : basePath;
+};
+
 export const absolutePathForCamera= (camera: Camera, share?: boolean) =>
   `${getBaseUrl(share)}${pathForCamera(camera)}`;
 

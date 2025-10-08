@@ -155,3 +155,9 @@ export const getStorageUrlsForPhoto = async ({ url }: Photo) => {
     urls.sort((a, b) => getSortScoreForUrl(a.url) - getSortScoreForUrl(b.url)),
   );
 };
+
+// Get file extension from photo storage URL
+export const getPhotoFileExtension = (photo: Photo): string => {
+  const { fileExtension } = getFileNamePartsFromStorageUrl(photo.url);
+  return fileExtension || 'jpg';
+};

@@ -31,6 +31,13 @@ export default function middleware(req: NextRequest, res:NextResponse) {
       `${PREFIX_TAG}/${matches?.[1]}`,
       req.url,
     ));
+  } else if (/^\/p\/([^/]+)\.(jpg|jpeg|png|gif|webp)$/i.test(pathname)) {
+    // Accept /p/photoId.ext paths, but serve /p/photoId (strip extension)
+    const matches = pathname.match(/^\/p\/([^/]+)\.(jpg|jpeg|png|gif|webp)$/i);
+    return NextResponse.rewrite(new URL(
+      `${PREFIX_PHOTO}/${matches?.[1]}`,
+      req.url,
+    ));
   }
 
   return auth(
